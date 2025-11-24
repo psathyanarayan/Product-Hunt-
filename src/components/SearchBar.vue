@@ -55,7 +55,7 @@ export default {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     padding: 0.5rem 1rem;
     width: 100%;
-    max-width: 400px;
+    max-width: none;
 }
 
 .search-input {
