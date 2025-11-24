@@ -56,6 +56,7 @@ export default {
     padding: 0.5rem 1rem;
     width: 100%;
     max-width: none;
+    margin-bottom: 40px;
 }
 
 .search-input {
