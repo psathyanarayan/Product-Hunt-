@@ -1,6 +1,6 @@
 <template>
     <div class="search-bar">
-        <input v-model="searchQuery" @input="onInput" type="text" placeholder="Search products..."
+        <input v-model="localQuery" @input="onInput" type="text" placeholder="Search products..."
             class="search-input" />
         <button @click="onSearch" class="search-btn">
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
@@ -14,17 +14,32 @@
 <script>
 export default {
     name: 'SearchBar',
+    emits: ['update:search', 'search'],
+    props: {
+        searchQuery: {
+            type: String,
+            default: ''
+        }
+    },
     data() {
         return {
-            searchQuery: ''
+            localQuery: this.searchQuery
+        }
+    },
+    watch: {
+        searchQuery(newVal) {
+            // keep local in sync when parent changes externally
+            if (newVal !== this.localQuery) this.localQuery = newVal || '';
         }
     },
     methods: {
-        onInput() {
-            this.$emit('update:search', this.searchQuery);
+        onInput(event) {
+            this.localQuery = event.target.value;
+            this.$emit('update:search', this.localQuery);
         },
         onSearch() {
-            this.$emit('search', this.searchQuery);
+            // emit the current local value
+            this.$emit('search', this.localQuery);
         }
     }
 }
